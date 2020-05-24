@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FitTracker</string>
+    <string name="title_home">Home</string>
+    <string name="title_workouts">Workouts</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_calories">Calories</string>
+</resources>

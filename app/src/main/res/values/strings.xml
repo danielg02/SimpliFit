@@ -4,4 +4,6 @@
     <string name="title_workouts">Workouts</string>
     <string name="title_profile">Profile</string>
     <string name="title_calories">Calories</string>
+    <string name="calories_remaining_text">Calories Remaining: %Q</string>
+    <string name="macros_text">Protein: %P\nFat: %F\nCarbohydrates: %C</string>
 </resources>

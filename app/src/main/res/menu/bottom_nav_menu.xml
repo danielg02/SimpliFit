@@ -8,17 +8,7 @@
 
     <item
         android:id="@+id/navigation_workout"
-        android:icon="@drawable/ic_list"
+        android:icon="@drawable/ic_action_name"
         android:title="@string/title_workouts" />
-
-    <item
-        android:id="@+id/navigation_calories"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/title_calories" />
-
-    item (Implement later)
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_person"
-        android:title="@string/title_profile" />
 
 </menu>

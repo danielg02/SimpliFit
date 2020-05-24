@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     //Declaring and Instantiating fragments
     final Fragment home = new HomeFragment();
     final Fragment workouts = new WorkoutsFragment();
-    final Fragment calories = new CaloriesFragment();
     final FragmentManager manager = getSupportFragmentManager();
     BottomNavigationView navView;
     Fragment current = home;    //Reference to whatever fragment is currently being shown
@@ -48,12 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
                         current = workouts; //Change current fragment to workouts
                         return true;
-                    case R.id.navigation_calories:
-                        manager.beginTransaction()
-                                .hide(current).show(calories).commit();   //Hide the current fragment and show calories
-
-                        current = calories; //Change current fragment to calories
-                        return true;
                 }
                 return false;
             }
@@ -65,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         navView = findViewById(R.id.nav_view);  //Assigning navigation bar view to navView
 
         //Adding fragments to activity state
-        manager.beginTransaction().add(R.id.main_frame, calories).hide(calories).commit();  //Initially, hide the calories fragment
         manager.beginTransaction().add(R.id.main_frame, workouts).hide(workouts).commit();  //Initially, hide the workouts fragment
         manager.beginTransaction().add(R.id.main_frame,home).commit();  //App begins on home fragment
     }

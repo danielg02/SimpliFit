@@ -16,43 +16,59 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
-    final Fragment fragment1 = new HomeFragment();
-    final Fragment fragment2 = new WorkoutsFragment();
-    final Fragment fragment3 = new CaloriesFragment();
-    final FragmentManager fm = getSupportFragmentManager();
-    Fragment active = fragment1;
+    //Declaring and Instantiating fragments
+    final Fragment home = new HomeFragment();
+    final Fragment workouts = new WorkoutsFragment();
+    final Fragment calories = new CaloriesFragment();
+    final FragmentManager manager = getSupportFragmentManager();
+    BottomNavigationView navView;
+    Fragment current = home;    //Reference to whatever fragment is currently being shown
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        fm.beginTransaction().add(R.id.main_frame, fragment3, "3").hide(fragment3).commit();
-        fm.beginTransaction().add(R.id.main_frame, fragment2, "2").hide(fragment2).commit();
-        fm.beginTransaction().add(R.id.main_frame,fragment1, "1").commit();
+        navInstantiation();     //Calling navInstantiation method
 
-        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        //Set listener on bottom navigation bar
+        navView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.navigation_home:
-                        fm.beginTransaction().hide(active).show(fragment1).commit();
-                        active = fragment1;
+                        manager.beginTransaction()
+                                .hide(current).show(home).commit();   //Hide the current fragment and show home
+
+                        current = home; //Change current fragment to home
                         return true;
                     case R.id.navigation_workout:
-                        fm.beginTransaction().hide(active).show(fragment2).commit();
-                        active = fragment2;
+                        manager.beginTransaction()
+                                .hide(current).show(workouts).commit();   //Hide the current fragment and show workouts
+
+                        current = workouts; //Change current fragment to workouts
                         return true;
                     case R.id.navigation_calories:
-                        fm.beginTransaction().hide(active).show(fragment3).commit();
-                        active = fragment3;
+                        manager.beginTransaction()
+                                .hide(current).show(calories).commit();   //Hide the current fragment and show calories
+
+                        current = calories; //Change current fragment to calories
                         return true;
                 }
                 return false;
             }
         });
-
-
     }
+    //End of onCreate method
+
+    public void navInstantiation(){
+        navView = findViewById(R.id.nav_view);  //Assigning navigation bar view to navView
+
+        //Adding fragments to activity state
+        manager.beginTransaction().add(R.id.main_frame, calories).hide(calories).commit();  //Initially, hide the calories fragment
+        manager.beginTransaction().add(R.id.main_frame, workouts).hide(workouts).commit();  //Initially, hide the workouts fragment
+        manager.beginTransaction().add(R.id.main_frame,home).commit();  //App begins on home fragment
+    }
+    //End of navInstantiation method
 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,37 +17,46 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class WorkoutsFragment extends Fragment {
-    private ArrayList<String> mWorkoutNames = new ArrayList<>();
+    String[] strings = {"1", "2", "3", "4", "5", "6", "7"};
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_workouts, container, false);
-        // 1. get a reference to recyclerView
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rvWorkouts);
-
-        // 2. set layoutManger
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        // this is data for recycler view
-        mWorkoutNames.add("Hello");
-        mWorkoutNames.add("Hello2");
-        mWorkoutNames.add("Hello3");
-
-        // 3. create an adapter
-        RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(mWorkoutNames);
-        // 4. set adapter
-        recyclerView.setAdapter(mAdapter);
-        // 5. set item animator to DefaultAnimator
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        return rootView;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        RecyclerView rv = new RecyclerView(getContext());
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setAdapter(new SimpleRVAdapter(strings));
+        return rv;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleViewHolder> {
+        private String[] dataSource;
+        public SimpleRVAdapter(String[] dataArgs){
+            dataSource = dataArgs;
+        }
+
+        @Override
+        public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            TextView view = new TextView(parent.getContext());
+            return new SimpleViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(SimpleViewHolder holder, int position) {
+            holder.textView.setText(dataSource[position]);
+        }
+
+        @Override
+        public int getItemCount() {
+            return dataSource.length;
+        }
+    }
+
+
+    public static class SimpleViewHolder extends RecyclerView.ViewHolder{
+        public TextView textView;
+        public SimpleViewHolder(View itemView) {
+            super(itemView);
+            textView = (TextView) itemView;
+        }
     }
 
 

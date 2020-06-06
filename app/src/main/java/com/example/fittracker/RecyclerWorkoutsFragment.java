@@ -27,6 +27,7 @@ public class RecyclerWorkoutsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workouts, container, false);
 
+        //For Testing Purposes
         List<String> workouts = new ArrayList<>();
         workouts.add("ONE");
         workouts.add("TWO");
@@ -36,9 +37,9 @@ public class RecyclerWorkoutsFragment extends Fragment {
         workouts.add("FOUR");
         workouts.add("FOUR");
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new RecyclerViewAdapter(workouts));
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);  //Instantiating recyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));  //Positions the items
+        recyclerView.setAdapter(new RecyclerViewAdapter(workouts)); //Binds list to the view
         return view;
     }
 

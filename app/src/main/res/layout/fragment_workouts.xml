@@ -14,12 +14,15 @@
         android:layout_marginBottom="136dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_workout_button"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="70dp"
+        android:clickable="true"
         android:stateListAnimator="@null"
-        app:backgroundTint="#0C4573" />
-
+        android:focusable="true"
+        app:backgroundTint="#0C4573"
+        app:srcCompat="@drawable/ic_add"/>
 
 </FrameLayout>

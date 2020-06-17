@@ -1,10 +1,14 @@
 package com.example.fittracker;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,29 +17,34 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerWorkoutsFragment extends Fragment {
-
-    public static Fragment newInstance() {
-        return new RecyclerWorkoutsFragment();
-    }
+    private FloatingActionButton addWorkoutButton;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workouts, container, false);
 
+        addWorkoutButton = (FloatingActionButton) view.findViewById(R.id.add_workout_button);
+
+        addWorkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_SHORT).show();    //Testing Purposes
+                Intent intent = new Intent(getActivity(), EnterWorkout1.class);
+                startActivity(intent);
+           }
+        });
+
         //For Testing Purposes
-        List<String> workouts = new ArrayList<>();
-        workouts.add("ONE");
-        workouts.add("TWO");
-        workouts.add("THREE");
-        workouts.add("FOUR");
-        workouts.add("FOUR");
-        workouts.add("FOUR");
-        workouts.add("FOUR");
+        DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
+        List<String> workouts = dbHelper.getWorkout();
+
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);  //Instantiating recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));  //Positions the items
@@ -44,17 +53,11 @@ public class RecyclerWorkoutsFragment extends Fragment {
     }
 
     private class RecyclerViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder{
-        private CardView mCardView;
         private TextView mTextView;
-
-        public RecyclerViewHolder(View itemView){
-            super(itemView);
-        }
 
         public RecyclerViewHolder(LayoutInflater inflater, ViewGroup container){
             super(inflater.inflate(R.layout.workout_card, container, false));
 
-            mCardView = itemView.findViewById(R.id.fragment_container);
             mTextView = itemView.findViewById(R.id.text_holder);
         }
     }

@@ -1,5 +1,6 @@
 package com.example.fittracker;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -46,7 +47,7 @@ public class RecyclerWorkoutsFragment extends Fragment {
         List<String> workouts = dbHelper.getWorkout();
 
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);  //Instantiating recyclerView
+        RecyclerView recyclerView = view.findViewById(R.id.workouts_recycler_view);  //Instantiating recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));  //Positions the items
         recyclerView.setAdapter(new RecyclerViewAdapter(workouts)); //Binds list to the view
         return view;
@@ -57,8 +58,19 @@ public class RecyclerWorkoutsFragment extends Fragment {
 
         public RecyclerViewHolder(LayoutInflater inflater, ViewGroup container){
             super(inflater.inflate(R.layout.workout_card, container, false));
-
             mTextView = itemView.findViewById(R.id.text_holder);
+
+            mTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
+                    int workoutID = dbHelper.getID(mTextView.getText().toString());
+                    Toast.makeText(getActivity(), mTextView.getText().toString(), Toast.LENGTH_SHORT);  //Testing
+                    Intent intent = new Intent(getActivity(), ExercisesActivity.class);
+                    intent.putExtra("workout_id", workoutID);
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -77,7 +89,7 @@ public class RecyclerWorkoutsFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull final RecyclerViewHolder holder, int position) {
             holder.mTextView.setText(mList.get(position));
         }
 
@@ -86,4 +98,5 @@ public class RecyclerWorkoutsFragment extends Fragment {
             return mList.size();
         }
     }
+
 }

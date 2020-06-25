@@ -39,6 +39,7 @@ public class EnterWorkout2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EnterWorkout2.this, MainActivity.class);
+                finish();
                 startActivity(intent);
             }
         });
@@ -47,21 +48,23 @@ public class EnterWorkout2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String exercise = exerciseName.getText().toString();
-                String reps = numOfReps.getText().toString();
                 String sets = numOfSets.getText().toString();
+                String reps = numOfReps.getText().toString();
                 String weightUsed = weight.getText().toString();
-                String workoutName = getIntent().getStringExtra("workout_name");
 
                 if (!exercise.isEmpty() && !sets.isEmpty() && !reps.isEmpty()
                         && !weightUsed.isEmpty()){
-                    dbHelper.insert(workoutName, exercise, sets, reps, weightUsed);
-                    Toast.makeText(getApplicationContext(), "Data inserted", Toast.LENGTH_SHORT);
+                    Intent intent = getIntent();
+                    int workoutID = intent.getIntExtra("workout_id", 0);
+                    dbHelper.insertExercise(workoutID, exercise, sets, reps, weightUsed);
                     exerciseName.setText("");
                     numOfReps.setText("");
                     numOfSets.setText("");
                     weight.setText("");
-
-                };
+                }
+                else{
+                    Toast.makeText(EnterWorkout2.this, "Fill in all data", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

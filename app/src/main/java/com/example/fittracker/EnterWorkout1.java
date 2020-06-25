@@ -11,8 +11,9 @@ import android.widget.Toast;
 
 public class EnterWorkout1 extends AppCompatActivity {
     private EditText workoutName;
-    private Button next;
+    private Button create;
     private String wName;
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,21 +21,23 @@ public class EnterWorkout1 extends AppCompatActivity {
         setContentView(R.layout.enter_workout1);
 
         workoutName = findViewById(R.id.workout_name);
-        next = findViewById(R.id.next_button);
+        create = findViewById(R.id.create_button);
+        dbHelper = new DatabaseHelper(this);
 
-        next.setOnClickListener(new View.OnClickListener() {
+        create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 wName = workoutName.getText().toString();
-
                 if (!wName.isEmpty()){
-                    Toast.makeText(EnterWorkout1.this, wName, Toast.LENGTH_SHORT).show();    //Testing Purposes
+                    dbHelper.insertWorkout(wName);
+                    int wID = dbHelper.getID(wName);
                     Intent intent = new Intent(EnterWorkout1.this, EnterWorkout2.class);
-                    intent.putExtra("workout_name", wName);
+                    intent.putExtra("workout_id", wID);
+                    finish();
                     startActivity(intent);
                 }
                 else{
-                    Toast.makeText(EnterWorkout1.this, "Enter Workout Name", Toast.LENGTH_SHORT).show();    //Testing Purposes
+                    Toast.makeText(EnterWorkout1.this, "Enter Workout Name", Toast.LENGTH_SHORT).show();
                 }
             }
         });

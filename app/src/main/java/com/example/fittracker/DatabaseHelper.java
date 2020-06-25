@@ -149,4 +149,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return arrayList;
     }
+
+    public void deleteExercise(String exercise) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + EXERCISES_TABLE + " WHERE " + colExercise + " = '" + exercise + "'");
+        db.close();
+    }
+
+    public void deleteWorkout(String workout) {
+        int workoutID = getID(workout);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + WORKOUTS_TABLE + " WHERE " + colID + " = '" + workoutID + "'");
+        db.execSQL("DELETE FROM " + EXERCISES_TABLE + " WHERE " + colID + " = '" + workoutID + "'");
+        db.close();
+    }
+
+    public void editWorkout(String workout) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.close();
+    }
+
+    public void editExercise(String exercise) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.close();
+    }
+
 }

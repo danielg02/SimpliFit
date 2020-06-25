@@ -21,7 +21,7 @@ public class ExercisesActivity extends Activity {
         exercises = new ArrayList<>();
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        List<String> exerciseNames = dbHelper.getExercise(workoutID);
+        final List<String> exerciseNames = dbHelper.getExercise(workoutID);
         List<String> sets = dbHelper.getSets(workoutID);
         List<String> reps = dbHelper.getReps(workoutID);
         List<String> weight = dbHelper.getWeight(workoutID);
@@ -35,5 +35,6 @@ public class ExercisesActivity extends Activity {
         rv.setAdapter(new com.example.fittracker.ExerciseRVAdapter(exercises));
 
     }
+
 }
 

@@ -1,10 +1,12 @@
 package com.example.fittracker;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,10 +51,12 @@ public class RecyclerWorkoutsFragment extends Fragment {
 
     private class RecyclerViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder{
         private TextView mTextView;
+        private Button deleteWorkout;
 
         public RecyclerViewHolder(LayoutInflater inflater, ViewGroup container){
             super(inflater.inflate(R.layout.workout_card, container, false));
             mTextView = itemView.findViewById(R.id.text_holder);
+            deleteWorkout = itemView.findViewById(R.id.delete_workout_button);
 
             mTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,6 +67,15 @@ public class RecyclerWorkoutsFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), ExercisesActivity.class);
                     intent.putExtra("workout_id", workoutID);
                     startActivity(intent);
+                }
+            });
+
+            deleteWorkout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
+                    dbHelper.deleteWorkout(mTextView.getText().toString());
+                    getFragmentManager().beginTransaction().detach(RecyclerWorkoutsFragment.this).attach(RecyclerWorkoutsFragment.this).commit();
                 }
             });
         }

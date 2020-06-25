@@ -1,9 +1,15 @@
 package com.example.fittracker;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +27,7 @@ public class ExerciseRVAdapter extends RecyclerView.Adapter<ExerciseRVAdapter.Ex
         TextView numOfSets;
         TextView numOfReps;
         TextView weight;
+        Button deleteExercise;
 
         ExerciseViewHolder(View itemView) {
             super(itemView);
@@ -28,6 +35,7 @@ public class ExerciseRVAdapter extends RecyclerView.Adapter<ExerciseRVAdapter.Ex
             numOfSets = itemView.findViewById(R.id.sets);
             numOfReps = itemView.findViewById(R.id.reps);
             weight = itemView.findViewById(R.id.weight);
+            deleteExercise = itemView.findViewById(R.id.delete_exercise_button);
         }
     }
 
@@ -45,6 +53,7 @@ public class ExerciseRVAdapter extends RecyclerView.Adapter<ExerciseRVAdapter.Ex
 
     @Override
     public void onBindViewHolder(ExerciseViewHolder evh, int i) {
+        final TextView name = evh.exerciseName;
         evh.exerciseName.setText(exercises.get(i).getName());
         evh.numOfSets.setText(exercises.get(i).getSets());
         evh.numOfReps.setText(exercises.get(i).getReps());

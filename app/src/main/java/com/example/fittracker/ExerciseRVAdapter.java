@@ -1,33 +1,28 @@
 package com.example.fittracker;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.fittracker.ExerciseItem;
-import com.example.fittracker.R;
 
 import java.util.List;
 
-public class ExerciseRVAdapter extends RecyclerView.Adapter<ExerciseRVAdapter.PersonViewHolder>{
+public class ExerciseRVAdapter extends RecyclerView.Adapter<ExerciseRVAdapter.ExerciseViewHolder>{
     List<ExerciseItem> exercises;
 
     public ExerciseRVAdapter(List<ExerciseItem> exercises){
         this.exercises = exercises;
     }
 
-    public static class PersonViewHolder extends RecyclerView.ViewHolder {
+    public static class ExerciseViewHolder extends RecyclerView.ViewHolder {
         TextView exerciseName;
         TextView numOfSets;
         TextView numOfReps;
         TextView weight;
 
-        PersonViewHolder(View itemView) {
+        ExerciseViewHolder(View itemView) {
             super(itemView);
             exerciseName = itemView.findViewById(R.id.exercise);
             numOfSets = itemView.findViewById(R.id.sets);
@@ -42,18 +37,18 @@ public class ExerciseRVAdapter extends RecyclerView.Adapter<ExerciseRVAdapter.Pe
     }
 
     @Override
-    public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.exercise_card, viewGroup, false);
-        PersonViewHolder pvh = new PersonViewHolder(v);
-        return pvh;
+    public ExerciseViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.exercise_card, viewGroup, false);
+        ExerciseViewHolder exerciseViewHolder = new ExerciseViewHolder(view);
+        return exerciseViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
-        personViewHolder.exerciseName.setText(exercises.get(i).getName());
-        personViewHolder.numOfSets.setText(exercises.get(i).getSets());
-        personViewHolder.numOfReps.setText(exercises.get(i).getReps());
-        personViewHolder.weight.setText(exercises.get(i).getWeight());
+    public void onBindViewHolder(ExerciseViewHolder evh, int i) {
+        evh.exerciseName.setText(exercises.get(i).getName());
+        evh.numOfSets.setText(exercises.get(i).getSets());
+        evh.numOfReps.setText(exercises.get(i).getReps());
+        evh.weight.setText(exercises.get(i).getWeight());
     }
 
     @Override

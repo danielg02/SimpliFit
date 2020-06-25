@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     //Declaring and Instantiating fragments
     final Fragment home = new HomeFragment();
     final Fragment workouts = new RecyclerWorkoutsFragment();
+
     final FragmentManager manager = getSupportFragmentManager();
     BottomNavigationView navView;
     Fragment current = home;    //Reference to whatever fragment is currently being shown
@@ -22,9 +23,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        navInstantiation();     //Calling navInstantiation method
+        navInstantiation();
 
-        //Set listener on bottom navigation bar
         navView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -56,6 +56,5 @@ public class MainActivity extends AppCompatActivity {
         manager.beginTransaction().add(R.id.main_frame, workouts).hide(workouts).commit();  //Initially, hide the workouts fragment
         manager.beginTransaction().add(R.id.main_frame,home).commit();  //App begins on home fragment
     }
-    //End of navInstantiation method
 
 }

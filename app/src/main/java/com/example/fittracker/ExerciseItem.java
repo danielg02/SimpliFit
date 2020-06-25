@@ -1,8 +1,5 @@
 package com.example.fittracker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ExerciseItem {
     private String exerciseName, sets, reps, weight;
 

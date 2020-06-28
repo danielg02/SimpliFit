@@ -35,6 +35,7 @@ public class EnterWorkout2 extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(EnterWorkout2.this, MainActivity.class);
                 finish();
+                overridePendingTransition(0,0);
                 startActivity(intent);
             }
         });

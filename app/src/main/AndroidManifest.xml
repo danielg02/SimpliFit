@@ -7,6 +7,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".EditWorkout"/>
+        <activity android:name=".EditExercise"/>
         <activity android:name=".ExercisesActivity"/>
         <activity android:name=".EnterWorkout2" />
         <activity android:name=".EnterWorkout1" />

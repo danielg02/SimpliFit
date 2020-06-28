@@ -34,6 +34,8 @@ public class RecyclerWorkoutsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EnterWorkout1.class);
+                getActivity().finish();
+                getActivity().overridePendingTransition(0,0);
                 startActivity(intent);
            }
         });
@@ -52,30 +54,48 @@ public class RecyclerWorkoutsFragment extends Fragment {
     private class RecyclerViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder{
         private TextView mTextView;
         private Button deleteWorkout;
+        private Button editWorkout;
 
         public RecyclerViewHolder(LayoutInflater inflater, ViewGroup container){
             super(inflater.inflate(R.layout.workout_card, container, false));
             mTextView = itemView.findViewById(R.id.text_holder);
             deleteWorkout = itemView.findViewById(R.id.delete_workout_button);
+            editWorkout = itemView.findViewById(R.id.edit_workout_button);
 
             mTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
                     int workoutID = dbHelper.getID(mTextView.getText().toString());
-                    Toast.makeText(getActivity(), mTextView.getText().toString(), Toast.LENGTH_SHORT);  //Testing
+                    Toast.makeText(getActivity(), Integer.toString(workoutID), Toast.LENGTH_SHORT).show();  //Testing
                     Intent intent = new Intent(getActivity(), ExercisesActivity.class);
                     intent.putExtra("workout_id", workoutID);
+                    getActivity().finish();
+                    getActivity().overridePendingTransition(0,0);
                     startActivity(intent);
+
                 }
             });
 
             deleteWorkout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String name = mTextView.getText().toString();
                     DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
                     dbHelper.deleteWorkout(mTextView.getText().toString());
                     getFragmentManager().beginTransaction().detach(RecyclerWorkoutsFragment.this).attach(RecyclerWorkoutsFragment.this).commit();
+                }
+            });
+
+            editWorkout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), EditWorkout.class);
+                    DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
+                    intent.putExtra("workout_id", dbHelper.getID(mTextView.getText().toString()));
+                    getActivity().finish();
+                    getActivity().overridePendingTransition(0,0);
+                    startActivity(intent);
                 }
             });
         }

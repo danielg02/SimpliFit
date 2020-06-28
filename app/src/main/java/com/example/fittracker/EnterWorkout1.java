@@ -34,6 +34,7 @@ public class EnterWorkout1 extends AppCompatActivity {
                     Intent intent = new Intent(EnterWorkout1.this, EnterWorkout2.class);
                     intent.putExtra("workout_id", wID);
                     finish();
+                    overridePendingTransition(0,0);
                     startActivity(intent);
                 }
                 else{

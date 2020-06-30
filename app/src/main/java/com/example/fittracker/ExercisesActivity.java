@@ -1,5 +1,6 @@
 package com.example.fittracker;
 
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,6 +70,14 @@ public class ExercisesActivity extends Activity {
         rv.setAdapter(new ExerciseRVAdapter(exercises));
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(ExercisesActivity.this, MainActivity.class);
+        finish();
+        overridePendingTransition(0,0);
+        startActivity(i);
+    }
 
     private class ExerciseRVAdapter extends RecyclerView.Adapter<ExerciseRVAdapter.ExerciseViewHolder> {
         List<ExerciseItem> exercises;

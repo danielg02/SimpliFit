@@ -65,4 +65,14 @@ public class EditExercise extends Activity {
         return new ExerciseItem(eName, eSets, eReps, eWeight);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(EditExercise.this, ExercisesActivity.class);
+        i.putExtra("workout_id", workoutID);
+        finish();
+        overridePendingTransition(0,0);
+        startActivity(i);
+    }
+
 }

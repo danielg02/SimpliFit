@@ -38,6 +38,14 @@ public class EditWorkout extends Activity {
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(EditWorkout.this, MainActivity.class);
+        finish();
+        overridePendingTransition(0,0);
+        startActivity(i);
     }
 }

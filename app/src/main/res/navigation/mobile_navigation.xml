@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.fittracker.HomeFragment"
+        android:name="com.example.fittracker.TimerFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_timer" >
         <action
             android:id="@+id/action_navigation_home_to_navigation_workout"
             app:destination="@id/navigation_workout" />

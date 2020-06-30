@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
     //Declaring and Instantiating fragments
-    final Fragment home = new HomeFragment();
+    final Fragment home = new TimerFragment();
     final Fragment workouts = new RecyclerWorkoutsFragment();
 
     final FragmentManager manager = getSupportFragmentManager();
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.navigation_home:
+                    case R.id.navigation_timer:
                         manager.beginTransaction()
                                 .hide(current).show(home).commit();   //Hide the current fragment and show home
 
@@ -57,4 +57,7 @@ public class MainActivity extends AppCompatActivity {
         manager.beginTransaction().add(R.id.main_frame,home).commit();  //App begins on home fragment
     }
 
+    @Override
+    public void onBackPressed() {
+    }
 }

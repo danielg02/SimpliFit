@@ -16,6 +16,7 @@ public class EnterWorkout2 extends AppCompatActivity {
     private EditText weight;
     private Button add;
     private Button finish;
+    private int workoutID;
     DatabaseHelper dbHelper;
 
     @Override
@@ -29,6 +30,7 @@ public class EnterWorkout2 extends AppCompatActivity {
         weight = findViewById(R.id.weight);
         add = findViewById(R.id.add_exercise_button);
         finish = findViewById(R.id.finish_button);
+        workoutID = getIntent().getIntExtra("workout_id", 0);
 
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +53,6 @@ public class EnterWorkout2 extends AppCompatActivity {
                 if (!exercise.isEmpty() && !sets.isEmpty() && !reps.isEmpty()
                         && !weightUsed.isEmpty()){
                     Intent intent = getIntent();
-                    int workoutID = intent.getIntExtra("workout_id", 0);
                     dbHelper.insertExercise(workoutID, exercise, sets, reps, weightUsed);
                     exerciseName.setText("");
                     numOfReps.setText("");
@@ -63,6 +64,15 @@ public class EnterWorkout2 extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(EnterWorkout2.this, EnterWorkout1.class);
+        dbHelper.deleteWorkout(dbHelper.getWorkoutName(workoutID));
+        finish();
+        overridePendingTransition(0,0);
+        startActivity(i);
     }
 }

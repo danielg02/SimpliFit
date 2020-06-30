@@ -34,8 +34,8 @@ public class RecyclerWorkoutsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EnterWorkout1.class);
-                getActivity().finish();
                 getActivity().overridePendingTransition(0,0);
+                getActivity().finish();
                 startActivity(intent);
            }
         });

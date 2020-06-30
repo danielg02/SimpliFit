@@ -43,4 +43,13 @@ public class EnterWorkout1 extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(EnterWorkout1.this, MainActivity.class);
+        finish();
+        overridePendingTransition(0,0);
+        startActivity(i);
+    }
 }

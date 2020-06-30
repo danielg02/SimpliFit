@@ -11,18 +11,18 @@
         android:id="@+id/workouts_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="136dp" />
+        android:layout_marginBottom="166dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_workout_button"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="100dp"
         android:clickable="true"
         android:stateListAnimator="@null"
         android:focusable="true"
-        app:backgroundTint="#0C4573"
+        app:backgroundTint="@color/dark_blue"
         app:srcCompat="@drawable/ic_add"/>
 
 </FrameLayout>

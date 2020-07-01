@@ -1,4 +1,4 @@
-package com.example.fittracker;
+package com.example.simplifit;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.example.fittracker;
+package com.example.simplifit;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -58,6 +58,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed() {}
 }

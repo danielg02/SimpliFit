@@ -1,4 +1,4 @@
-package com.example.fittracker;
+package com.example.simplifit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,13 +29,17 @@ public class EnterWorkout1 extends AppCompatActivity {
             public void onClick(View v) {
                 wName = workoutName.getText().toString();
                 if (!wName.isEmpty()){
-                    dbHelper.insertWorkout(wName);
-                    int wID = dbHelper.getID(wName);
-                    Intent intent = new Intent(EnterWorkout1.this, EnterWorkout2.class);
-                    intent.putExtra("workout_id", wID);
-                    finish();
-                    overridePendingTransition(0,0);
-                    startActivity(intent);
+                    if (dbHelper.ifWorkoutExists(wName)){
+                        Toast.makeText(EnterWorkout1.this, "Already Exists", Toast.LENGTH_SHORT).show();
+                    } else {
+                        dbHelper.insertWorkout(wName);
+                        int wID = dbHelper.getID(wName);
+                        Intent intent = new Intent(EnterWorkout1.this, EnterWorkout2.class);
+                        intent.putExtra("workout_id", wID);
+                        finish();
+                        overridePendingTransition(0,0);
+                        startActivity(intent);
+                    }
                 }
                 else{
                     Toast.makeText(EnterWorkout1.this, "Enter Workout Name", Toast.LENGTH_SHORT).show();

@@ -51,7 +51,7 @@
         android:layout_gravity="bottom"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
-        android:background="#8E8181"
+        android:background="#0080FF"
         android:text="Edit"
         android:textColor="@color/colorWhite" />
 
@@ -61,7 +61,7 @@
         android:layout_gravity="bottom"
         android:layout_marginLeft="300dp"
         android:layout_marginBottom="10dp"
-        android:background="#B12525"
+        android:background="#000080"
         android:text="Delete"
         android:textColor="@color/colorWhite"
         android:id="@+id/delete_exercise_button"/>

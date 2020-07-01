@@ -1,4 +1,4 @@
-package com.example.fittracker;
+package com.example.simplifit;
 
 public class ExerciseItem {
     private String exerciseName, sets, reps, weight;

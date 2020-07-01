@@ -1,14 +1,13 @@
-package com.example.fittracker;
+package com.example.simplifit;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "workouts_database";
@@ -68,6 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //Returns a list of all workouts in DB
     public ArrayList getWorkout() {
         //Get Readable Database
         SQLiteDatabase sqlDB = this.getReadableDatabase();
@@ -76,12 +76,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM " + WORKOUTS_TABLE, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            arrayList.add(cursor.getString(cursor.getColumnIndex("workout")));
+            arrayList.add(cursor.getString(cursor.getColumnIndex(colWorkout)));
             cursor.moveToNext();
         }
         return arrayList;
     }
 
+    //Returns the id of a given workout name
     public int getID(String workoutName) {
         //Get Readable Database
         SQLiteDatabase sqlDB = this.getReadableDatabase();
@@ -93,6 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    //Returns the workout name for a given id
     public String getWorkoutName(int workoutID) {
         //Get Readable Database
         SQLiteDatabase sqlDB = this.getReadableDatabase();
@@ -104,6 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return name;
     }
 
+    //Returns a list of exercises in a given workout
     public ArrayList getExercise(int workoutID) {
         //Get Readable Database
         SQLiteDatabase sqlDB = this.getReadableDatabase();
@@ -112,12 +115,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM " + EXERCISES_TABLE + " WHERE id = ?", new String[]{Integer.toString(workoutID)});
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            arrayList.add(cursor.getString(cursor.getColumnIndex("exercise")));
+            arrayList.add(cursor.getString(cursor.getColumnIndex(colExercise)));
             cursor.moveToNext();
         }
         return arrayList;
     }
 
+    //Returns a list of sets in a given workout
     public ArrayList getSets(int workoutID) {
         //Get Readable Database
         SQLiteDatabase sqlDB = this.getReadableDatabase();
@@ -126,12 +130,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM " + EXERCISES_TABLE + " WHERE id = " + workoutID, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            arrayList.add(cursor.getString(cursor.getColumnIndex("sets")));
+            arrayList.add(cursor.getString(cursor.getColumnIndex(colSets)));
             cursor.moveToNext();
         }
         return arrayList;
     }
 
+    //Returns a list of reps in a given workout
     public ArrayList getReps(int workoutID) {
         //Get Readable Database
         SQLiteDatabase sqlDB = this.getReadableDatabase();
@@ -140,12 +145,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM " + EXERCISES_TABLE + " WHERE id = " + workoutID, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            arrayList.add(cursor.getString(cursor.getColumnIndex("reps")));
+            arrayList.add(cursor.getString(cursor.getColumnIndex(colReps)));
             cursor.moveToNext();
         }
         return arrayList;
     }
 
+    //Returns a list of weights in a given workout
     public ArrayList getWeight(int workoutID) {
         //Get Readable Database
         SQLiteDatabase sqlDB = this.getReadableDatabase();
@@ -154,17 +160,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqlDB.rawQuery("SELECT * FROM " + EXERCISES_TABLE + " WHERE id = " + workoutID, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            arrayList.add(cursor.getString(cursor.getColumnIndex("weight")));
+            arrayList.add(cursor.getString(cursor.getColumnIndex(colWeight)));
             cursor.moveToNext();
         }
         return arrayList;
     }
 
+    //Deletes a given exercise from DB
     public void deleteExercise(String exercise) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + EXERCISES_TABLE + " WHERE " + colExercise + " = ?", new String[]{exercise});
     }
 
+    //Deletes a given workout and its exercises from DB
     public void deleteWorkout(String workout) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + EXERCISES_TABLE + " WHERE " + colID + " = ?", new String[]{Integer.toString(getID(workout))});
@@ -189,6 +197,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(WORKOUTS_TABLE, cv, colID + " = ?", new String[]{Integer.toString(workoutID)});
     }
 
+    //Returns an ExerciseItem object with values from a specific row in DB
     public ExerciseItem getExerciseItem(int id, String name) {
         ExerciseItem eItem;
         String eName = "", eSets = "", eReps = "", eWeight = "";
@@ -210,57 +219,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return eItem;
     }
 
-//    public void moveExerciseUp(int id, String currentExercise, List<ExerciseItem> exercises){
-//        int position = positionInList(currentExercise, exercises);
-//
-//        if (position == 0){
-//
-//        }
-//        else{
-//            ExerciseItem current = getExerciseItem(id, exercises.get(position).getName());
-//            ExerciseItem previous = getExerciseItem(id, exercises.get(position - 1).getName());
-//
-//            SQLiteDatabase db = this.getWritableDatabase();
-//            ContentValues preCV = new ContentValues();
-//            preCV.put(colExercise, previous.getName());
-//            preCV.put(colSets, previous.getSets());
-//            preCV.put(colReps, previous.getReps());
-//            preCV.put(colWeight, previous.getWeight());
-//
-//            ContentValues currCV = new ContentValues();
-//            currCV.put(colExercise, current.getName());
-//            currCV.put(colSets, current.getSets());
-//            currCV.put(colReps, current.getReps());
-//            currCV.put(colWeight, current.getWeight());
-//
-//            ContentValues temp = new ContentValues();
-//            temp.putNull(colExercise);
-//            currCV.putNull(colSets);
-//            currCV.putNull(colReps);
-//            currCV.putNull(colWeight);
-//
-//            db.update(EXERCISES_TABLE, temp, colID + " = ? AND " + colExercise + " = ?" , new String[]{Integer.toString(id), current.getName()});
-//            db.update(EXERCISES_TABLE, currCV, colID + " = ? AND " + colExercise + " = ?" , new String[]{Integer.toString(id), previous.getName()});
-//            db.update(EXERCISES_TABLE, preCV, colID + " = ? AND " + colExercise + " = ?" , new String[]{Integer.toString(id), current.getName()});
-//        }
-//    }
-//
-//
-//    public int positionInList(String exercise, List<ExerciseItem> exercises){
-//        List<String> eNames = new ArrayList<>();
-//        int position = -1;
-//
-//        for (ExerciseItem e : exercises){
-//            eNames.add(e.getName());
-//        }
-//
-//        for (int i = 0; i < eNames.size(); i++){
-//            if (eNames.get(i).equals(exercise)){
-//                position = i;
-//                break;
-//            }
-//        }
-//        return position;
-//    }
+    //Checks if workout already exists in DB
+    public boolean ifWorkoutExists(String wName){
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "SELECT " + colWorkout + " FROM " + WORKOUTS_TABLE + " WHERE " + colWorkout + " = ?";
+        Cursor cursor = database.rawQuery(query, new String[]{wName});
+        if (cursor.getCount() == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    //Check if exercise already exists in a certain workout in DB
+    public boolean ifExerciseExists(String eName, int id){
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "SELECT " + colExercise + " FROM " + EXERCISES_TABLE + " WHERE " + colExercise
+                + " = ? AND " + colID + " = ?";
+        Cursor cursor = database.rawQuery(query, new String[]{eName, Integer.toString(id)});
+        if (cursor.getCount() == 0) {
+            return false;
+        }
+        return true;
+    }
 
 }

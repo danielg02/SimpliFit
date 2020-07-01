@@ -1,6 +1,5 @@
-package com.example.fittracker;
+package com.example.simplifit;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +31,7 @@ public class RecyclerWorkoutsFragment extends Fragment {
         addWorkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Go to EnterWorkout1 Activity
                 Intent intent = new Intent(getActivity(), EnterWorkout1.class);
                 getActivity().overridePendingTransition(0,0);
                 getActivity().finish();
@@ -52,7 +51,7 @@ public class RecyclerWorkoutsFragment extends Fragment {
     }
 
     private class RecyclerViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder{
-        private TextView mTextView;
+        private TextView mTextView;     //TextView containing workout name
         private Button deleteWorkout;
         private Button editWorkout;
 
@@ -65,10 +64,11 @@ public class RecyclerWorkoutsFragment extends Fragment {
             mTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Go to ExercisesActivity
                     DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
                     int workoutID = dbHelper.getID(mTextView.getText().toString());
-                    Toast.makeText(getActivity(), Integer.toString(workoutID), Toast.LENGTH_SHORT).show();  //Testing
                     Intent intent = new Intent(getActivity(), ExercisesActivity.class);
+                    //Transfer workoutID to the new activity
                     intent.putExtra("workout_id", workoutID);
                     getActivity().finish();
                     getActivity().overridePendingTransition(0,0);
@@ -83,6 +83,7 @@ public class RecyclerWorkoutsFragment extends Fragment {
                     String name = mTextView.getText().toString();
                     DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
                     dbHelper.deleteWorkout(mTextView.getText().toString());
+                    //Reload fragment
                     getFragmentManager().beginTransaction().detach(RecyclerWorkoutsFragment.this).attach(RecyclerWorkoutsFragment.this).commit();
                 }
             });
@@ -90,8 +91,10 @@ public class RecyclerWorkoutsFragment extends Fragment {
             editWorkout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Go to EditWorkout Activity
                     Intent intent = new Intent(getActivity(), EditWorkout.class);
                     DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
+                    //Transfer workoutID to new activity
                     intent.putExtra("workout_id", dbHelper.getID(mTextView.getText().toString()));
                     getActivity().finish();
                     getActivity().overridePendingTransition(0,0);
@@ -117,7 +120,7 @@ public class RecyclerWorkoutsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull final RecyclerViewHolder holder, int position) {
-            holder.mTextView.setText(mList.get(position));
+            holder.mTextView.setText(mList.get(position));  //Sets text to workout name
         }
 
         @Override

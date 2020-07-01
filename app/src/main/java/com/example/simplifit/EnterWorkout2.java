@@ -1,4 +1,4 @@
-package com.example.fittracker;
+package com.example.simplifit;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,10 +35,15 @@ public class EnterWorkout2 extends AppCompatActivity {
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EnterWorkout2.this, MainActivity.class);
-                finish();
-                overridePendingTransition(0,0);
-                startActivity(intent);
+                //Workout must have at least 1 exercise
+                if (dbHelper.getExercise(workoutID).size() > 0){
+                    Intent intent = new Intent(EnterWorkout2.this, MainActivity.class);
+                    finish();
+                    overridePendingTransition(0,0);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(EnterWorkout2.this, "Please Input an Exercise", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -52,12 +57,16 @@ public class EnterWorkout2 extends AppCompatActivity {
 
                 if (!exercise.isEmpty() && !sets.isEmpty() && !reps.isEmpty()
                         && !weightUsed.isEmpty()){
-                    Intent intent = getIntent();
-                    dbHelper.insertExercise(workoutID, exercise, sets, reps, weightUsed);
-                    exerciseName.setText("");
-                    numOfReps.setText("");
-                    numOfSets.setText("");
-                    weight.setText("");
+                    if (dbHelper.ifExerciseExists(exercise, workoutID)){
+                        Toast.makeText(EnterWorkout2.this, "Exercise Already Exists. Edit If Necessary", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent intent = getIntent();
+                        dbHelper.insertExercise(workoutID, exercise, sets, reps, weightUsed);
+                        exerciseName.setText("");
+                        numOfReps.setText("");
+                        numOfSets.setText("");
+                        weight.setText("");
+                    }
                 }
                 else{
                     Toast.makeText(EnterWorkout2.this, "Fill in all data", Toast.LENGTH_SHORT).show();

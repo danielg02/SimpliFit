@@ -1,6 +1,5 @@
-package com.example.fittracker;
+package com.example.simplifit;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -120,9 +118,9 @@ public class ExercisesActivity extends Activity {
         @Override
         public void onBindViewHolder(final ExerciseViewHolder evh, int i) {
             evh.exerciseName.setText(exercises.get(i).getName());
-            evh.numOfSets.setText(exercises.get(i).getSets());
-            evh.numOfReps.setText(exercises.get(i).getReps());
-            evh.weight.setText(exercises.get(i).getWeight());
+            evh.numOfSets.setText("Sets: " + exercises.get(i).getSets());
+            evh.numOfReps.setText("Reps: " + exercises.get(i).getReps());
+            evh.weight.setText("Weight: " + exercises.get(i).getWeight());
 
             evh.deleteExercise.setOnClickListener(new View.OnClickListener() {
                 @Override

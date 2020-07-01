@@ -5,7 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.fittracker.TimerFragment">
+    tools:context="com.example.simplifit.TimerFragment">
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:thumbTint="@color/dark_blue"
+        android:progressTint="@color/colorDeepSkyBlue"/>
 
     <include layout="@layout/timer_content" />
 

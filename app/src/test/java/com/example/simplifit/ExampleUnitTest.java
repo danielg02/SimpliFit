@@ -1,4 +1,4 @@
-package com.example.fittracker;
+package com.example.simplifit;
 
 import org.junit.Test;
 

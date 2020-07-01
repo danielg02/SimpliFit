@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FitTracker</string>
+    <string name="app_name">SimpliFit</string>
     <string name="title_home">Home</string>
     <string name="title_workouts">Workouts</string>
     <string name="nav_timer">Timer</string>
